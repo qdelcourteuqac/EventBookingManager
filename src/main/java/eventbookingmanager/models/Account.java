@@ -12,7 +12,7 @@ public class Account extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne
+    @OneToOne()
     private Person person;
 
     public String getEmail() {
@@ -29,5 +29,13 @@ public class Account extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

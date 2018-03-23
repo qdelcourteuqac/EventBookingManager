@@ -20,7 +20,7 @@ public class Person extends BaseEntity {
     @ApiModelProperty(notes = "Le nom de famille de la personne", required = true)
     private String  lastname;
 
-    @Column()
+    @Column(unique = true)
     @ApiModelProperty(notes = "L'email de la personne", required = true)
     private String email;
 

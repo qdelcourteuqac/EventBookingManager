@@ -7,15 +7,12 @@ import main.java.eventbookingmanager.models.AccountDTO;
 import main.java.eventbookingmanager.repository.AccountRepository;
 import main.java.eventbookingmanager.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -33,17 +30,22 @@ public class AccountController extends BaseApiController<Account> {
         return (List<Account>) repository.findAll();
     }
 
+    @Transactional
+    @ResponseBody
     @ApiOperation(value = "Créer un compte utilisateur")
     @PostMapping(path = "/account", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Account> createStudent(@RequestBody Account account) {
+    public Account createAccount(@RequestBody Account account) {
         String encodedPassword = new AccountService().encodePassword(account.getPassword());
         account.setPassword(encodedPassword);
-        Account savedAccount = repository.save(account);
+
+        entityManager.persist(account.getPerson());
+        entityManager.persist(account);
+        entityManager.flush();
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(savedAccount.getId()).toUri();
+                .buildAndExpand(account.getId()).toUri();
 
-        return ResponseEntity.created(location).build();
+        return account;
     }
 
     //
