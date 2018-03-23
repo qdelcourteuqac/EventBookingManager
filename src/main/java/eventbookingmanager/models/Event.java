@@ -3,18 +3,11 @@ package main.java.eventbookingmanager.models;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
-public class Event implements Serializable {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Event extends BaseEntity {
 
     @Column()
     @ApiModelProperty(notes = "Le nom de l'évènement", required = true)
@@ -35,12 +28,12 @@ public class Event implements Serializable {
     @ApiModelProperty(notes = "Le nombre maximal de personne autorisé")
     private Integer maxPlaces;
 
+    @OneToMany(mappedBy = "event")
+    @OrderColumn()
+    private List<Reservation> reservations;
+
     public Event() {
         this.createdAt = new DateTime();
-    }
-
-    public Long getId() {
-        return this.id;
     }
 
     public String getName() {
@@ -81,5 +74,13 @@ public class Event implements Serializable {
 
     public void setMaxPlaces(Integer maxPlaces) {
         this.maxPlaces = maxPlaces;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }

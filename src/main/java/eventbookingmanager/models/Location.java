@@ -1,8 +1,6 @@
 package main.java.eventbookingmanager.models;
 
-import java.io.Serializable;
-
-public class Location implements Serializable {
+public class Location extends BaseEntity {
 
     private String name;
     private double longitude;

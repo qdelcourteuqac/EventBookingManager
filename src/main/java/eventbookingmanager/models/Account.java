@@ -1,17 +1,10 @@
 package main.java.eventbookingmanager.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Account implements Serializable {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Account extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -19,9 +12,8 @@ public class Account implements Serializable {
     @Column(nullable = false)
     private String password;
 
-    public Long getId() {
-        return id;
-    }
+    @OneToOne
+    private Person person;
 
     public String getEmail() {
         return email;

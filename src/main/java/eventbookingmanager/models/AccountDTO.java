@@ -2,7 +2,7 @@ package main.java.eventbookingmanager.models;
 
 import java.io.Serializable;
 
-public class AccountDTO implements Serializable {
+public class AccountDTO extends BaseEntity {
 
     private String email;
     private String password;

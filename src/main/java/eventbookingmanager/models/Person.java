@@ -10,11 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Person implements Serializable {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Person extends BaseEntity {
 
     @Column()
     @ApiModelProperty(notes = "Le prénom de la personne", required = true)
@@ -35,10 +31,6 @@ public class Person implements Serializable {
     @Column()
     @ApiModelProperty(notes = "La date de naissance de la personne")
     private Date birthdate;
-
-    public Long getId() {
-        return id;
-    }
 
     public String getFirstname() {
         return firstname;

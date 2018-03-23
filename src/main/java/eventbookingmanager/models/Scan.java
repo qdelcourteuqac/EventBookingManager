@@ -9,21 +9,19 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
-public class Scan implements Serializable {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Scan extends BaseEntity {
 
     @Column()
     private DateTime scanAt;
 
+    // Le compte de la personne qui a fait le scan
+    private Account scanner;
+
+    // La reservation qui a été scannée
+    private Reservation reservation;
+
     public Scan() {
         this.scanAt = new DateTime();
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public DateTime getScanAt() {
