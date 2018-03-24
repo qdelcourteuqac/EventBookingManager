@@ -8,12 +8,9 @@ import main.java.eventbookingmanager.repository.AccountRepository;
 import main.java.eventbookingmanager.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.transaction.Transactional;
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,12 +35,8 @@ public class AccountController extends BaseApiController<Account> {
         String encodedPassword = new AccountService().encodePassword(account.getPassword());
         account.setPassword(encodedPassword);
 
-        entityManager.persist(account.getPerson());
         entityManager.persist(account);
         entityManager.flush();
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(account.getId()).toUri();
 
         return account;
     }
@@ -53,13 +46,19 @@ public class AccountController extends BaseApiController<Account> {
     //
     @ApiOperation(value = "Authentification à partir de l'email et du mot de passe")
     @PostMapping(path = "/account/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public boolean authenticate(@RequestBody AccountDTO accountDTO) {
+    public Account authenticate(@RequestBody AccountDTO accountDTO) {
         Optional<Account> accountOptional = Optional.ofNullable(repository.findByEmail(accountDTO.getEmail()));
 
         if (!accountOptional.isPresent()) {
             throw new RuntimeException("No account found for email "+accountDTO.getEmail());
         }
 
-        return new AccountService().checkCredentials(accountOptional.get(), accountDTO.getPassword());
+        boolean isCorrect = new AccountService().checkCredentials(accountOptional.get(), accountDTO.getPassword());
+
+        if (!isCorrect) {
+            throw new RuntimeException("Password incorrect");
+        }
+
+        return accountOptional.get();
     }
 }

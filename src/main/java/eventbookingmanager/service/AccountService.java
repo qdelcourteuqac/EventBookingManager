@@ -3,8 +3,6 @@ package main.java.eventbookingmanager.service;
 import main.java.eventbookingmanager.models.Account;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Optional;
-
 public class AccountService {
 
     /**

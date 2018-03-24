@@ -1,7 +1,9 @@
 package main.java.eventbookingmanager.models;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Account extends BaseEntity {
@@ -12,7 +14,7 @@ public class Account extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne()
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Person person;
 
     public String getEmail() {

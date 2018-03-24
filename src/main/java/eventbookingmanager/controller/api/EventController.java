@@ -3,7 +3,7 @@ package main.java.eventbookingmanager.controller.api;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import main.java.eventbookingmanager.models.Event;
-import main.java.eventbookingmanager.repository.BaseRepository;
+import main.java.eventbookingmanager.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class EventController extends BaseApiController<Event> {
 
     @Autowired
-    protected BaseRepository<Event> repository;
+    protected EventRepository repository;
 
     @ApiOperation(value = "Obtenir la liste de tous les évènements")
     @GetMapping(path = "/event", produces = MediaType.APPLICATION_JSON_VALUE)

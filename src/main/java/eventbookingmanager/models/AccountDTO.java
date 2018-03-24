@@ -1,10 +1,15 @@
 package main.java.eventbookingmanager.models;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
-public class AccountDTO extends BaseEntity {
+public class AccountDTO implements Serializable {
 
+    @ApiModelProperty(value = "Email du compte", required = true)
     private String email;
+
+    @ApiModelProperty(value = "Mot de passe du compte", required = true)
     private String password;
 
     public String getEmail() {

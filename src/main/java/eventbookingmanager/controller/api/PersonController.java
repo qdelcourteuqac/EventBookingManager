@@ -3,7 +3,7 @@ package main.java.eventbookingmanager.controller.api;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import main.java.eventbookingmanager.models.Person;
-import main.java.eventbookingmanager.repository.BaseRepository;
+import main.java.eventbookingmanager.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@Api(tags = {"Personne"}, description = "Opérations concernant les personnes ayant réservé")
+@Api(tags = {"Personne"}, description = "Opérations concernant les personnes")
 public class PersonController extends BaseApiController<Person> {
 
     @Autowired
-    protected BaseRepository<Person> repository;
+    protected PersonRepository repository;
 
     @ApiOperation(value = "Obtenir la liste de toutes les personnes ayant réservé")
     @GetMapping(path = "/person", produces = MediaType.APPLICATION_JSON_VALUE)
