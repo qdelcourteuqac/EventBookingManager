@@ -2,10 +2,7 @@ package main.java.eventbookingmanager.models;
 
 import org.joda.time.DateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -14,10 +11,7 @@ public class Scan extends BaseEntity {
     @Column()
     private DateTime scanAt;
 
-    // Le compte de la personne qui a fait le scan
-    private Account scanner;
-
-    // La reservation qui a été scannée
+    @OneToOne()
     private Reservation reservation;
 
     public Scan() {
@@ -30,5 +24,13 @@ public class Scan extends BaseEntity {
 
     public void setScanAt(DateTime scanAt) {
         this.scanAt = scanAt;
+    }
+
+    public Reservation getReservation() {
+        return this.reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 }

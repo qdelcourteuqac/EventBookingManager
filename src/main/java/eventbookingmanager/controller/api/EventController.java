@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import main.java.eventbookingmanager.models.Event;
 import main.java.eventbookingmanager.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,13 @@ public class EventController extends BaseApiController<Event> {
 
     @ApiOperation(value = "Obtenir un évènement")
     @GetMapping(path = "/event/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Event retrieveEvent(@PathVariable long id) {
+    public ResponseEntity<Event> retrieveEvent(@PathVariable long id) {
         Optional<Event> event = Optional.ofNullable(repository.findOne(id));
 
         if (!event.isPresent())
-            throw new RuntimeException("No event found for id-" + id);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        return event.get();
+        return new ResponseEntity<>(event.get(), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Créer un évènement")
