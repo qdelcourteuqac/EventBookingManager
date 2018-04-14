@@ -34,13 +34,12 @@ public class ScanController extends BaseApiController<Scan> {
     protected EventRepository eventRepository;
 
     @ApiOperation(value = "Scanner un Qr CODE")
-    @GetMapping(path = "/scan/reservation/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/scan/reservation/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ScanResponse> scanReservation(@PathVariable long id) {
+        Reservation reservation = this.reservationRepository.findOne(id);
         try {
-            Reservation reservation = this.reservationRepository.findOne(id);
-
             if (reservation == null) {
-                throw new Exception();
+                throw new ScanException(ScanException.Type.UNKNOWN_RESERVATION);
             }
 
             Person scannedPerson = reservation.getPerson();
@@ -58,14 +57,15 @@ public class ScanController extends BaseApiController<Scan> {
             }
 
         } catch (ScanException scanException) {
-            ScanResponse scanResponse = new ScanResponse(scanException.getMessage());
+            ScanResponse scanResponse = new ScanResponse(scanException.getType().getMessage());
             return new ResponseEntity<>(scanResponse, HttpStatus.BAD_REQUEST);
         } catch (Exception exception) {
             ScanResponse scanResponse = new ScanResponse(ScanException.Type.EXCEPTION.getMessage());
             return new ResponseEntity<>(scanResponse, HttpStatus.BAD_REQUEST);
         }
 
-        return ResponseEntity.ok().build();
+        ScanResponse scanResponse = new ScanResponse(reservation);
+        return new ResponseEntity<>(scanResponse, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Progression des scans pour un évènement")
