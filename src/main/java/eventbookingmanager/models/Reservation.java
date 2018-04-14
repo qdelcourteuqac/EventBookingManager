@@ -1,13 +1,12 @@
 package main.java.eventbookingmanager.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
 public class Reservation extends BaseEntity {
@@ -19,7 +18,9 @@ public class Reservation extends BaseEntity {
     @ApiModelProperty(notes = "La personne ayant réservé", required = true)
     private Person person;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     @ApiModelProperty(notes = "L'évènement de réservation", required = true)
     private Event event;
 

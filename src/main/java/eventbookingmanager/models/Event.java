@@ -3,7 +3,10 @@ package main.java.eventbookingmanager.models;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import java.util.List;
 
 @Entity

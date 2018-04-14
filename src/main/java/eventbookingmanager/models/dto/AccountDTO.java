@@ -1,4 +1,4 @@
-package main.java.eventbookingmanager.models;
+package main.java.eventbookingmanager.models.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 

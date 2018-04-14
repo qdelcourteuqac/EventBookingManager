@@ -3,7 +3,7 @@ package main.java.eventbookingmanager.controller.api;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import main.java.eventbookingmanager.models.Account;
-import main.java.eventbookingmanager.models.AccountDTO;
+import main.java.eventbookingmanager.models.dto.AccountDTO;
 import main.java.eventbookingmanager.repository.AccountRepository;
 import main.java.eventbookingmanager.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
