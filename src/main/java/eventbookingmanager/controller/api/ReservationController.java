@@ -50,6 +50,11 @@ public class ReservationController extends BaseApiController<Reservation> {
     @ApiOperation(value = "Créer une réservation")
     @PostMapping(path = "/reservation", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
+
+
+        //TODO: Check if the person is already registered in this event
+
+
         // check if there is still places
         Event event = reservation.getEvent();
         if (event.getReservations().size() >= event.getMaxPlaces()) {

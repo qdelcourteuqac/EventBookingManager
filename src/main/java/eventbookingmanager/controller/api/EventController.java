@@ -86,4 +86,12 @@ public class EventController extends BaseApiController<Event> {
 
         return new ResponseEntity<>(reservationRepository.getAllByEvent(event), HttpStatus.OK);
     }
+
+    @ApiOperation(value = "Rechercher un évènement avec son nom")
+    @GetMapping(path = "/event/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Event>> searchByName(@RequestParam(name = "name") String name) {
+        List<Event> events = repository.findAllByNameContaining(name);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
 }
