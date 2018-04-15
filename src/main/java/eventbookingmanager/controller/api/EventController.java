@@ -3,7 +3,9 @@ package main.java.eventbookingmanager.controller.api;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import main.java.eventbookingmanager.models.Event;
+import main.java.eventbookingmanager.models.Reservation;
 import main.java.eventbookingmanager.repository.EventRepository;
+import main.java.eventbookingmanager.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +23,9 @@ public class EventController extends BaseApiController<Event> {
 
     @Autowired
     protected EventRepository repository;
+
+    @Autowired
+    protected ReservationRepository reservationRepository;
 
     @ApiOperation(value = "Obtenir la liste de tous les évènements")
     @GetMapping(path = "/event", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,5 +73,17 @@ public class EventController extends BaseApiController<Event> {
         repository.save(event);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "Récupérer les réservations d'un évènement")
+    @GetMapping(path = "/event/reservations/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Reservation>> retrieveReservationsForAnEvent(@PathVariable long id) {
+        Event event = repository.findOne(id);
+
+        if (event == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(reservationRepository.getAllByEvent(event), HttpStatus.OK);
     }
 }

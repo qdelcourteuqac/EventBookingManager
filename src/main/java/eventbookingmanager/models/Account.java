@@ -1,9 +1,7 @@
 package main.java.eventbookingmanager.models;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Account extends BaseEntity {
@@ -16,6 +14,9 @@ public class Account extends BaseEntity {
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Person person;
+
+    @OneToMany()
+    private List<Event> events;
 
     public String getEmail() {
         return email;
@@ -39,5 +40,13 @@ public class Account extends BaseEntity {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public List<Event> getEvents() {
+        return this.events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 }

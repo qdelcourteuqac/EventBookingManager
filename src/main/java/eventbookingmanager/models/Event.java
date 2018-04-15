@@ -32,7 +32,6 @@ public class Event extends BaseEntity {
     private Integer maxPlaces;
 
     @OneToMany(mappedBy = "event")
-    @OrderColumn()
     private List<Reservation> reservations;
 
     public Event() {

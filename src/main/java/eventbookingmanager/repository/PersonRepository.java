@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Primary
 public interface PersonRepository extends BaseRepository<Person> {
+    Person findPersonByFirstnameAndLastname(String firstname, String lastname);
 }

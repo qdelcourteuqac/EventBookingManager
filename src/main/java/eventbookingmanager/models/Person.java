@@ -21,7 +21,7 @@ public class Person extends BaseEntity {
     private String  lastname;
 
     @Column(unique = true)
-    @ApiModelProperty(notes = "L'email de la personne", required = true)
+    @ApiModelProperty(notes = "L'email de la personne")
     private String email;
 
     @Column()

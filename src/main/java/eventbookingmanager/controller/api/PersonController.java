@@ -40,7 +40,7 @@ public class PersonController extends BaseApiController<Person> {
 
     @ApiOperation(value = "Créer une personne")
     @PostMapping(path = "/person", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> createStudent(@RequestBody Person person) {
+    public ResponseEntity<Person> createPerson(@RequestBody Person person) {
         Person savedPerson = repository.save(person);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

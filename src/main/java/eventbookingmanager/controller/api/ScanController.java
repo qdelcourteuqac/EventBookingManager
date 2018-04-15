@@ -64,7 +64,15 @@ public class ScanController extends BaseApiController<Scan> {
             return new ResponseEntity<>(scanResponse, HttpStatus.BAD_REQUEST);
         }
 
-        ScanResponse scanResponse = new ScanResponse(reservation);
+        // Create new Scan entity
+        Scan scan = new Scan();
+        scan.setReservation(reservation);
+
+        // Flush scan to DB
+        entityManager.persist(scan);
+        entityManager.flush();
+
+        ScanResponse scanResponse = new ScanResponse(scan);
         return new ResponseEntity<>(scanResponse, HttpStatus.OK);
     }
 

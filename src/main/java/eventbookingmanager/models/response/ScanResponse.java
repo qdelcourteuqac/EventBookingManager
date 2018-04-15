@@ -1,24 +1,22 @@
 package main.java.eventbookingmanager.models.response;
 
-import main.java.eventbookingmanager.models.Reservation;
+import main.java.eventbookingmanager.models.Scan;
 
 public class ScanResponse {
 
-    private Reservation reservation;
+    private Scan scan;
     private String message;
 
-    public ScanResponse(Reservation reservation) {
-        this.reservation = reservation;
-        this.message = null;
+    public ScanResponse(Scan scan) {
+        this.scan = scan;
     }
 
     public ScanResponse(String message) {
         this.message = message;
-        this.reservation = null;
     }
 
-    public Reservation getReservation() {
-        return reservation;
+    public Scan getScan() {
+        return this.scan;
     }
 
     public String getMessage() {
