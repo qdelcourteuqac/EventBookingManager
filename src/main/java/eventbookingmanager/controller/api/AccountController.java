@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import main.java.eventbookingmanager.models.Account;
 import main.java.eventbookingmanager.models.AuthenticationRequest;
+import main.java.eventbookingmanager.models.Event;
 import main.java.eventbookingmanager.models.JwtTokens;
 import main.java.eventbookingmanager.repository.AccountRepository;
 import main.java.eventbookingmanager.service.AccountService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Api(tags = {"Compte"}, description = "Opérations concernant les comptes utilisateurs")
@@ -38,6 +40,18 @@ public class AccountController extends BaseApiController<Account> {
     @GetMapping(path = "account", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Account> retrieveAccounts() {
         return (List<Account>) repository.findAll();
+    }
+
+
+    @ApiOperation(value = "Obtenir tous les comptes utilisateurs")
+    @GetMapping(path = "account/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Account> retrieveAccount(@PathVariable long id) {
+        Optional<Account> account = Optional.ofNullable(repository.findOne(id));
+
+        if (!account.isPresent())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(account.get(), HttpStatus.OK);
     }
 
     @Transactional
