@@ -3,10 +3,7 @@ package main.java.eventbookingmanager.models;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -31,7 +28,7 @@ public class Event extends BaseEntity {
     @ApiModelProperty(notes = "Le nombre maximal de personne autorisé")
     private Integer maxPlaces;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
     private List<Reservation> reservations;
 
     public Event() {
